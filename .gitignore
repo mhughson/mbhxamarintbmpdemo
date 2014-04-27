@@ -1,3 +1,3 @@
 Components/
-ComponentTest/bin/
-ComponentTest/obj/
+ComponentTest/bin/*
+ComponentTest/obj/*
