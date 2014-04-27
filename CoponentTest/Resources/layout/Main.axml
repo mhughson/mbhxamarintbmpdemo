@@ -3,23 +3,46 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+    <TextView
+        android:text="Main Menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+    <Button
+        android:text="New Game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/StartMatchBtn" />
+    <Button
+        android:text="Load Game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/InboxBtn" />
+    <TextView
+        android:text="Gameplay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp" />
+    <TextView
+        android:text="--"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/GameState"
+        android:layout_marginRight="0.0dp"
+        android:layout_marginLeft="0.0dp"
+        android:layout_gravity="center" />
     <Button
         android:id="@+id/myButton"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/hello" />
     <Button
-        android:text="Start Match"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/StartMatchBtn" />
-    <Button
-        android:text="Open Inbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/InboxBtn" />
-    <Button
-        android:text="Take Turn"
+        android:text="End Turn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/TakeTurnBtn" />

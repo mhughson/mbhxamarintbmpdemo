@@ -28,11 +28,113 @@ namespace CoponentTest
         public static int RC_SELECT_PLAYERS = 9001;
         public static int RC_OPEN_INBOX = 9002;
 
-        ITurnBasedMatch mMatch;
+        // Keeps track of all the information about this game, and the IMatch it is associated
+        // with. This is game specific data. In our case we just store the number of times
+        // a button has been clicked.
+        class MatchInfo
+        {
+            // How many times has the button been clicked?
+            int mClickCount;
 
-        int count = 0;
+            // Keep a reference to the IMatch so that we can check stuff on it.
+            ITurnBasedMatch mMatch;
 
-        private IGoogleApiClient mGoogleApiClient;
+            MainActivity mOwningActivity;
+
+            public MatchInfo(MainActivity owner)
+            {
+                mOwningActivity = owner;
+            }
+
+            public void UpdateMatchInfo(ITurnBasedMatch match)
+            {
+                mMatch = match;
+
+                if (mMatch != null && mMatch.GetData() != null)
+                {
+                    pClickCount = BitConverter.ToInt32(mMatch.GetData(), 0);
+                }
+                else
+                {
+                    pClickCount = 0;
+                }
+            }
+
+            public void IncrementClickCount(int amount = 1)
+            {
+                if (mMatch == null)
+                {
+                    Toast.MakeText(mOwningActivity, "Start Match First", ToastLength.Long).Show();
+                    return;
+                }
+
+                if (mMatch.TurnStatus != TurnBasedMatch.MatchTurnStatusMyTurn)
+                {
+                    Toast.MakeText(mOwningActivity, "Not Your Turn", ToastLength.Long).Show();
+                    return;
+                }
+
+                pClickCount += amount;
+            }
+
+            public void EndTurn()
+            {
+                if (mMatch == null)
+                {
+                    Toast.MakeText(mOwningActivity, "Start Match First", ToastLength.Long).Show();
+                    return;
+                }
+
+                if (mMatch.TurnStatus != TurnBasedMatch.MatchTurnStatusMyTurn)
+                {
+                    Toast.MakeText(mOwningActivity, "Not Your Turn", ToastLength.Long).Show();
+                    return;
+                }
+
+                String nextParticipantId = "";
+
+                foreach (string p in mMatch.ParticipantIds)
+                {
+                    if (p != mMatch.PendingParticipantId)
+                    {
+                        nextParticipantId = p;
+                        break;
+                    }
+                }
+
+                byte[] data = BitConverter.GetBytes(pClickCount);
+
+                //startMatch(match);
+                GamesClass.TurnBasedMultiplayer.TakeTurn(mOwningActivity.mGoogleApiClient, mMatch.MatchId, data, nextParticipantId).SetResultCallback(mOwningActivity);
+            }
+
+            public int pClickCount
+            {
+                get
+                {
+                    return mClickCount;
+                }
+                set
+                {
+                    mClickCount = value;
+                    TextView GameState = mOwningActivity.FindViewById<TextView>(Resource.Id.GameState);
+                    GameState.Text = mClickCount.ToString();
+                }
+            }
+
+            public ITurnBasedMatch pMatch
+            {
+                get
+                {
+                    return mMatch;
+                }
+            }
+        }
+
+        MatchInfo mMatch;
+
+        // Our gateway to all things Google.
+        public IGoogleApiClient mGoogleApiClient;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -43,19 +145,11 @@ namespace CoponentTest
             // create an instance of Google API client and specify the Play services 
             // and scopes to use. In this example, we specify that the app wants 
             // access to the Games, Plus, and Cloud Save services and scopes.
-            GoogleApiClientBuilder builder = 
-                new GoogleApiClientBuilder(this, this, this);
-
+            GoogleApiClientBuilder builder = new GoogleApiClientBuilder(this, this, this);
             builder.AddApi(GamesClass.Api).AddScope(GamesClass.ScopeGames);
-            /*
-            builder.AddApi(GamesClass.Api)
-                .AddApi(Plus.Api)
-                .AddApi(AppStateManager.Api)
-                .AddScope(GamesClass.ScopeGames)
-                .AddScope(Plus.ScopePlusLogin)
-                .AddScope(AppStateManager.ScopeAppState);
-            */
             mGoogleApiClient = builder.Build();
+
+            mMatch = new MatchInfo(this);
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
@@ -63,15 +157,12 @@ namespace CoponentTest
             // Get our button from the layout resource,
             // and attach an event to it
             Button button = FindViewById<Button>(Resource.Id.myButton);
-
             button.Click += delegate
             {
-                count++;
-                button.Text = string.Format("{0} clicks!", count);
+                mMatch.IncrementClickCount();
             };
 
             Button StartMatch = FindViewById<Button>(Resource.Id.StartMatchBtn);
-
             StartMatch.Click += delegate
             {
                 Toast.MakeText(this, "StartMatch.Click", ToastLength.Long).Show();
@@ -81,7 +172,6 @@ namespace CoponentTest
             };
 
             Button InboxButton = FindViewById<Button>(Resource.Id.InboxBtn);
-
             InboxButton.Click += delegate
             {
                 Toast.MakeText(this, "InboxButton.Click", ToastLength.Long).Show();
@@ -91,10 +181,9 @@ namespace CoponentTest
             };
 
             Button TurnButton = FindViewById<Button>(Resource.Id.TakeTurnBtn);
-
             TurnButton.Click += delegate
             {
-                TakeTurn();
+                mMatch.EndTurn();
             };
         }
 
@@ -164,8 +253,8 @@ namespace CoponentTest
                 }
                 try
                 {
-                    mMatch = Java.Lang.Object.GetObject<ITurnBasedMatch>(data.GetParcelableExtra(Multiplayer.ExtraTurnBasedMatch).Handle, JniHandleOwnership.DoNotTransfer);
-                    UpdateData();
+                    ITurnBasedMatch match = Java.Lang.Object.GetObject<ITurnBasedMatch>(data.GetParcelableExtra(Multiplayer.ExtraTurnBasedMatch).Handle, JniHandleOwnership.DoNotTransfer);
+                    mMatch.UpdateMatchInfo(match);
                 }
                 catch
                 {
@@ -182,13 +271,7 @@ namespace CoponentTest
 
                 if (NewResult != null)
                 {
-                    mMatch = NewResult.Match;
-                    if (mMatch.GetData() != null)
-                    {
-                        // This is a game that has already started, so I'll just start
-                        //updateMatch(match);
-                        UpdateData();
-                    }
+                    mMatch.UpdateMatchInfo(NewResult.Match);
                     return;
                 }
             }
@@ -200,71 +283,14 @@ namespace CoponentTest
             {
                 ITurnBasedMultiplayerInitiateMatchResult NewResult = Java.Lang.Object.GetObject<ITurnBasedMultiplayerInitiateMatchResult>(result.Handle, JniHandleOwnership.DoNotTransfer);
 
-                mMatch = NewResult.Match;
-                if (mMatch.GetData() != null)
+                if (NewResult != null)
                 {
-                    // This is a game that has already started, so I'll just start
-                    //updateMatch(match);
-                    UpdateData();
+                    mMatch.UpdateMatchInfo(NewResult.Match);
+                    return;
                 }
-                return;
             }
             catch
             {
-            }
-        }
-
-        private void TakeTurn()
-        {
-            // Load the game data for this match
-            //String mTurnData = new String(mMatch.GetData());
-
-            // Get the next participant in the game-defined way, possibly round-robin.
-            //String nextParticipantId = mMatch.pa
-            if (mMatch == null)
-            {
-                Toast.MakeText(this, "No Match", ToastLength.Long).Show();
-                return;
-            }
-
-            if (mMatch.TurnStatus != TurnBasedMatch.MatchTurnStatusMyTurn)
-            {
-                Toast.MakeText(this, "Not your turn!", ToastLength.Long).Show();
-                return;
-            }
-
-            String nextParticipantId = "";
-
-            foreach (string p in mMatch.ParticipantIds)
-            {
-                if (p != mMatch.PendingParticipantId)
-                {
-                    nextParticipantId = p;
-                    break;
-                }
-            }
-
-            // Perform some game action. In this example, we simply retrieve a
-            // text string from the view and display a spinner.
-            //mTurnData = mDataView.getText().toString();
-
-            // At this point, you might want to show a waiting dialog so that
-            // the current player does not try to submit turn actions twice.
-            //showSpinner();
-
-            byte[] data = BitConverter.GetBytes(count);
-
-            //startMatch(match);
-            GamesClass.TurnBasedMultiplayer.TakeTurn(mGoogleApiClient, mMatch.MatchId, data, nextParticipantId).SetResultCallback(this);
-        }
-
-        private void UpdateData()
-        {
-            if (mMatch != null)
-            {
-                count = BitConverter.ToInt32(mMatch.GetData(), 0);
-                Button button = FindViewById<Button>(Resource.Id.myButton);
-                button.Text = string.Format("{0} clicks!", count);
             }
         }
 
@@ -314,7 +340,6 @@ namespace CoponentTest
                 } 
                 catch (Android.Content.IntentSender.SendIntentException /*e*/) 
                 {
-                    // Not really sure why this is here.
                     mGoogleApiClient.Connect();
                 }
             }
@@ -325,9 +350,7 @@ namespace CoponentTest
 
         public void OnTurnBasedMatchReceived(ITurnBasedMatch match)
         {
-            mMatch = match;
-
-            UpdateData();
+            mMatch.UpdateMatchInfo(match);
         }
 
         public void OnTurnBasedMatchRemoved(string matchId)
