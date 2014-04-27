@@ -18,12 +18,11 @@ using System.Collections.Generic;
 namespace CoponentTest
 {
     [Activity(Label = "CoponentTest", MainLauncher = true)]
-    public class MainActivity 
-        : Activity
-        , IGoogleApiClientConnectionCallbacks
-        , IGoogleApiClientOnConnectionFailedListener
-        , IResultCallback 
-        , IOnTurnBasedMatchUpdateReceivedListener
+    public class MainActivity : Activity
+    , IGoogleApiClientConnectionCallbacks
+    , IGoogleApiClientOnConnectionFailedListener
+    , IResultCallback 
+    , IOnTurnBasedMatchUpdateReceivedListener
     {
         public static int REQUEST_CODE_RESOLVE_ERR = 9000;
         public static int RC_SELECT_PLAYERS = 9001;
@@ -64,7 +63,7 @@ namespace CoponentTest
             // Get our button from the layout resource,
             // and attach an event to it
             Button button = FindViewById<Button>(Resource.Id.myButton);
-            
+
             button.Click += delegate
             {
                 count++;
@@ -166,6 +165,7 @@ namespace CoponentTest
                 try
                 {
                     mMatch = Java.Lang.Object.GetObject<ITurnBasedMatch>(data.GetParcelableExtra(Multiplayer.ExtraTurnBasedMatch).Handle, JniHandleOwnership.DoNotTransfer);
+                    UpdateData();
                 }
                 catch
                 {
