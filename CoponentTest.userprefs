@@ -1,0 +1,44 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CoponentTest\MainActivity.cs">
+    <Files>
+      <File FileName="CoponentTest\MainActivity.cs" Line="69" Column="41" />
+      <File FileName="Components\googleplayservices-16.0\lib\android\19.1.0\content\support\v7\appcompat\res\values-v14\styles_base.xml" Line="1" Column="1" />
+      <File FileName="..\..\..\..\..\Program Files (x86)\MSBuild\Xamarin\Android\Xamarin.Android.Common.targets" Line="1" Column="1" />
+      <File FileName="Components\googleplayservices-16.0\lib\android\19.1.0\content\support\v7\mediarouter\res\layout-v17\mr_media_route_list_item.xml" Line="1" Column="1" />
+      <File FileName="CoponentTest\Properties\AndroidManifest.xml" Line="1" Column="31" />
+      <File FileName="CoponentTest\Resources\values\Strings.xml" Line="7" Column="5" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="CoponentTest" expanded="True">
+            <Node name="References" expanded="True" />
+            <Node name="ComponentReferenceFolder" expanded="True" />
+            <Node name="Properties" expanded="True" />
+            <Node name="Resources" expanded="True">
+              <Node name="layout" expanded="True" />
+              <Node name="values" expanded="True" />
+            </Node>
+            <Node name="MainActivity.cs" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Matt\Documents\Projects\CoponentTest\CoponentTest\MainActivity.cs" line="37" column="1" />
+      <Breakpoint file="C:\Users\Matt\Documents\Projects\CoponentTest\CoponentTest\MainActivity.cs" line="103" column="1" />
+      <Breakpoint file="C:\Users\Matt\Documents\Projects\CoponentTest\CoponentTest\MainActivity.cs" line="108" column="1" />
+      <Breakpoint file="C:\Users\Matt\Documents\Projects\CoponentTest\CoponentTest\MainActivity.cs" line="119" column="1" />
+      <Breakpoint file="C:\Users\Matt\Documents\Projects\CoponentTest\CoponentTest\MainActivity.cs" line="130" column="1" />
+      <Breakpoint file="C:\Users\Matt\Documents\Projects\CoponentTest\CoponentTest\MainActivity.cs" line="87" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.CoponentTest AndroidDeviceId-Debug="1e1990d9" MonoForAntroid.PreferredDevice="Nexus 5" />
+</Properties>
