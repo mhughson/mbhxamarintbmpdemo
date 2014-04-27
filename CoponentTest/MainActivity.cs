@@ -91,7 +91,7 @@ namespace CoponentTest
                     return;
                 }
 
-                String nextParticipantId = "";
+                String nextParticipantId = null;
 
                 foreach (string p in mMatch.ParticipantIds)
                 {
@@ -165,6 +165,12 @@ namespace CoponentTest
             Button StartMatch = FindViewById<Button>(Resource.Id.StartMatchBtn);
             StartMatch.Click += delegate
             {
+                if (!mGoogleApiClient.IsConnected)
+                {
+                    Toast.MakeText(this, "Sign In First", ToastLength.Long).Show();
+                    return;
+                }
+
                 Toast.MakeText(this, "StartMatch.Click", ToastLength.Long).Show();
 
                 Intent intent = GamesClass.TurnBasedMultiplayer.GetSelectOpponentsIntent(mGoogleApiClient, 1, 1, true);
@@ -174,6 +180,12 @@ namespace CoponentTest
             Button InboxButton = FindViewById<Button>(Resource.Id.InboxBtn);
             InboxButton.Click += delegate
             {
+                if (!mGoogleApiClient.IsConnected)
+                {
+                    Toast.MakeText(this, "Sign In First", ToastLength.Long).Show();
+                    return;
+                }
+
                 Toast.MakeText(this, "InboxButton.Click", ToastLength.Long).Show();
 
                 Intent intent = GamesClass.TurnBasedMultiplayer.GetInboxIntent(mGoogleApiClient);
@@ -184,6 +196,36 @@ namespace CoponentTest
             TurnButton.Click += delegate
             {
                 mMatch.EndTurn();
+            };
+
+            Button SingInButton = FindViewById<Button>(Resource.Id.SignInBtn);
+            SingInButton.Click += delegate
+            {
+                if (mGoogleApiClient.IsConnected || mGoogleApiClient.IsConnecting)
+                {
+                    Toast.MakeText(this, "Already Signed In.", ToastLength.Long).Show();
+                    return;
+                }
+
+                mGoogleApiClient.Connect();
+            };
+
+            Button SingOutButton = FindViewById<Button>(Resource.Id.SignOutBtn);
+            SingOutButton.Click += delegate
+            {
+                if (mGoogleApiClient == null)
+                {
+                    Toast.MakeText(this, "Google API is Null. Fatal Error.", ToastLength.Long).Show();
+                    return;
+                }
+
+                if (!mGoogleApiClient.IsConnected && !mGoogleApiClient.IsConnecting)
+                {
+                    Toast.MakeText(this, "Already Signed Out.", ToastLength.Long).Show();
+                    return;
+                }
+
+                mGoogleApiClient.Disconnect();
             };
         }
 

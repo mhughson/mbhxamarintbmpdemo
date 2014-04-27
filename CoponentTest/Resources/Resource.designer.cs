@@ -1051,17 +1051,23 @@ namespace CoponentTest
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f070043
-			public const int GameState = 2131165251;
+			// aapt resource value: 0x7f070045
+			public const int GameState = 2131165253;
 			
-			// aapt resource value: 0x7f070041
-			public const int InboxBtn = 2131165249;
+			// aapt resource value: 0x7f070043
+			public const int InboxBtn = 2131165251;
 			
 			// aapt resource value: 0x7f070040
-			public const int StartMatchBtn = 2131165248;
+			public const int SignInBtn = 2131165248;
 			
-			// aapt resource value: 0x7f070045
-			public const int TakeTurnBtn = 2131165253;
+			// aapt resource value: 0x7f070041
+			public const int SignOutBtn = 2131165249;
+			
+			// aapt resource value: 0x7f070042
+			public const int StartMatchBtn = 2131165250;
+			
+			// aapt resource value: 0x7f070047
+			public const int TakeTurnBtn = 2131165255;
 			
 			// aapt resource value: 0x7f07001f
 			public const int action_bar = 2131165215;
@@ -1159,26 +1165,26 @@ namespace CoponentTest
 			// aapt resource value: 0x7f07002c
 			public const int list_item = 2131165228;
 			
-			// aapt resource value: 0x7f070049
-			public const int media_route_control_frame = 2131165257;
+			// aapt resource value: 0x7f07004b
+			public const int media_route_control_frame = 2131165259;
 			
-			// aapt resource value: 0x7f07004a
-			public const int media_route_disconnect_button = 2131165258;
-			
-			// aapt resource value: 0x7f070046
-			public const int media_route_list = 2131165254;
-			
-			// aapt resource value: 0x7f070047
-			public const int media_route_volume_layout = 2131165255;
+			// aapt resource value: 0x7f07004c
+			public const int media_route_disconnect_button = 2131165260;
 			
 			// aapt resource value: 0x7f070048
-			public const int media_route_volume_slider = 2131165256;
+			public const int media_route_list = 2131165256;
+			
+			// aapt resource value: 0x7f070049
+			public const int media_route_volume_layout = 2131165257;
+			
+			// aapt resource value: 0x7f07004a
+			public const int media_route_volume_slider = 2131165258;
 			
 			// aapt resource value: 0x7f070012
 			public const int middle = 2131165202;
 			
-			// aapt resource value: 0x7f070044
-			public const int myButton = 2131165252;
+			// aapt resource value: 0x7f070046
+			public const int myButton = 2131165254;
 			
 			// aapt resource value: 0x7f070009
 			public const int never = 2131165193;
@@ -1258,8 +1264,8 @@ namespace CoponentTest
 			// aapt resource value: 0x7f07003f
 			public const int textView1 = 2131165247;
 			
-			// aapt resource value: 0x7f070042
-			public const int textView2 = 2131165250;
+			// aapt resource value: 0x7f070044
+			public const int textView2 = 2131165252;
 			
 			// aapt resource value: 0x7f07002e
 			public const int title = 2131165230;

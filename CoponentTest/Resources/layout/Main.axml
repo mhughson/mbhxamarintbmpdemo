@@ -11,6 +11,16 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp" />
     <Button
+        android:text="Sign In"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SignInBtn" />
+    <Button
+        android:text="Sign Out"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SignOutBtn" />
+    <Button
         android:text="New Game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
