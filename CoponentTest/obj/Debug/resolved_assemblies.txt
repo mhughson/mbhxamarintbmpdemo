@@ -1,5 +1,0 @@
-C:\Users\Matt\Documents\Dev\Game\mbhxamarintbmpdemo\CoponentTest\bin\Debug\CoponentTest.dll
-C:\Users\Matt\Documents\Dev\Game\mbhxamarintbmpdemo\Components\googleplayservices-16.0\lib\android\GooglePlayServicesLib.dll
-C:\Users\Matt\Documents\Dev\Game\mbhxamarintbmpdemo\Components\googleplayservices-16.0\lib\android\Xamarin.Android.Support.v4.dll
-C:\Users\Matt\Documents\Dev\Game\mbhxamarintbmpdemo\Components\googleplayservices-16.0\lib\android\Xamarin.Android.Support.v7.AppCompat.dll
-C:\Users\Matt\Documents\Dev\Game\mbhxamarintbmpdemo\Components\googleplayservices-16.0\lib\android\Xamarin.Android.Support.v7.MediaRouter.dll
